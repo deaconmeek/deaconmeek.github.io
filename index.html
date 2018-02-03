@@ -1,0 +1,123 @@
+<html>
+  <head>
+		<title>1ndex 0f /</title>
+		<META NAME = "keywords" CONTENT= "deanoemcke, dean oemcke, oemcke, experiential, experiential radio, proxificationator, timelapse">
+		<META NAME = "description" CONTENT= "DONT CLICK ON ME!<p>No results! No results!">
+
+		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+	</head>
+	<body>
+		<h2>1ndex 0f /</h2>
+		<pre></pre>
+
+		<script type="text/javascript">
+			const iconBlank = 'icons/blank.gif';
+			const iconFolder = 'icons/folder.gif';
+
+			const headerEl = document.getElementsByTagName('h2')[0];
+			const containerEl = document.getElementsByTagName('pre')[0];
+
+			const projects = [
+				{
+					N: 'experientialradio/',
+					M: '2012-02-26 09:50:03',
+					S: '-',
+					D: 'Experimental music of questionable taste',
+				},
+				{
+					N: 'supereffective/',
+					M: '2016-08-28 10:45:30',
+					S: '-',
+					D: 'Pokemon strength & weakness calculator',
+				},
+				{
+					N: 'timelapse/',
+					M: '2008-12-19 10:58:24',
+					S: '-',
+					D: 'Amateur timelapse on shitty digital camera',
+				},
+				{
+					N: 'xkde/',
+					M: '2010-06-02 06:03:36',
+					S: '-',
+					D: 'Webcomic from on the road',
+				},
+			];
+	
+			const sortColumn = location.search ? location.search[3] : 'N';
+			const sortOrder = location.search ? location.search[7] : 'A';
+			const nextSortBySort = {
+				'A': 'D',
+				'D': 'A',
+			};
+
+			const sortedProjects = projects.sort((a, b) => a[sortColumn] > b[sortColumn]);
+			if (sortOrder === 'D') {
+				sortedProjects.reverse();
+			}
+
+			updateTitle(0);
+			populateContainer();
+			
+			function updateTitle(val) {
+				var currentStr = headerEl.innerHTML;
+				var strA = currentStr.substring(0,1);
+				var strB = currentStr.substring(6,7);
+				
+				//dont update strA if count is >50 and its already a 1
+				if (val < 50 || strA != 1)
+					strA = getNewRand(strA);
+				//dont update strB if count is >50 and its already a 0
+				if (val < 50 || strB != 0)
+					strB = getNewRand(strB);
+				
+					headerEl.innerHTML = strA + "ndex " + strB + "f /";
+				val++;
+				if (val < 50 || currentStr != "1ndex 0f /")
+					setTimeout('updateTitle(' + val + ')', val*3);
+			}
+		
+			function getNewRand(val) {
+				var randomStr = Math.random().toString();
+				while (randomStr.substring(2, 3) == val)
+					randomStr = Math.random().toString();
+				return randomStr.substring(2, 3);
+			}
+		
+			function populateContainer() {
+				let content = '';
+				content += buildLine(
+					iconBlank, 
+					[buildHref('N'), buildHref('M'), buildHref('S'), buildHref('D')], 
+					['Name', 'Last modified', 'Size', 'Description'],
+				);
+				content += '<hr>';
+				for (const project of sortedProjects) {
+					content += buildLine(iconFolder, [project.N, '', '', ''], [project.N, project.M, project.S, project.D]);
+				}
+				content += '<hr>';
+				containerEl.innerHTML = content;
+			}
+		
+			function buildHref(colName) {
+				return `?C=${colName};O=${sortColumn === colName ? nextSortBySort[sortOrder] : 'A'}`;
+			}
+		
+			function buildLine(icon, hrefs, strings) {
+				const colWidths = [24, 23, 6, 0];
+				const iconAltString = icon === iconBlank ? 'Icon ' : '[DIR]';
+				const iconString = `<img src="${icon}" alt="${iconAltString}"> `;
+				const nameString = `<a href="${hrefs[0]}">${strings[0]}</a>${pad(colWidths[0] - strings[0].length)}`;
+				const modString = `${hrefs[1] ? `<a href="${hrefs[1]}">${strings[1]}</a>` : strings[1]}${pad(colWidths[1] - strings[1].length)}`;
+				const sizeString = `${hrefs[2] ? `<a href="${hrefs[2]}">${strings[2]}</a>` : strings[2]}${pad(colWidths[2] - strings[2].length)}`;
+				const descString = `${hrefs[3] ? `<a href="${hrefs[3]}">${strings[3]}</a>` : strings[3]}`;
+				return iconString + nameString + modString + sizeString + descString + '\n';
+			}
+		
+			function pad(count) {
+				return (new Array(count).fill(' ')).join('');
+			}
+		
+		</script>
+	</body>
+</html>
