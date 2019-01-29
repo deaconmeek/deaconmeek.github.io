@@ -69,7 +69,7 @@
 				'D': 'A',
 			};
 
-			projects.sort((a, b) => a[sortColumn] > b[sortColumn]);
+			projects.sort((a, b) => ('' + a[sortColumn]).localeCompare(b[sortColumn]));
 			if (sortOrder === 'D') {
 				projects.reverse();
 			}
