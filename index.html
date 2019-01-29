@@ -69,9 +69,9 @@
 				'D': 'A',
 			};
 
-			const sortedProjects = projects.sort((a, b) => a[sortColumn] > b[sortColumn]);
+			let sortedProjects = projects.sort((a, b) => a[sortColumn] > b[sortColumn]);
 			if (sortOrder === 'D') {
-				sortedProjects.reverse();
+				sortedProjects = sortedProjects.reverse();
 			}
 
 			updateTitle(0);
