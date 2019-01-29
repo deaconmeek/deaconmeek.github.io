@@ -69,13 +69,13 @@
 				'D': 'A',
 			};
 
-			let sortedProjects = projects.sort((a, b) => a[sortColumn] > b[sortColumn]);
+			projects.sort((a, b) => a[sortColumn] > b[sortColumn]);
 			if (sortOrder === 'D') {
-				sortedProjects = sortedProjects.reverse();
+				projects.reverse();
 			}
 
 			updateTitle(0);
-			populateContainer();
+			populateContainer(projects);
 			
 			function updateTitle(val) {
 				var currentStr = headerEl.innerHTML;
@@ -102,7 +102,7 @@
 				return randomStr.substring(2, 3);
 			}
 		
-			function populateContainer() {
+			function populateContainer(projects) {
 				let content = '';
 				content += buildLine(
 					iconBlank, 
@@ -110,7 +110,7 @@
 					['Name', 'Last modified', 'Size', 'Description'],
 				);
 				content += '<hr>';
-				for (const project of sortedProjects) {
+				for (const project of projects) {
 					content += buildLine(iconFolder, [project.H, '', '', ''], [project.N, project.M, project.S, project.D]);
 				}
 				content += '<hr>';
